@@ -17,7 +17,7 @@ services:
     image: nginx/nginx-prometheus-exporter
     container_name: nginx_exporter
     command:
-      - -nginx.scrape-uri=http://host.docker.internal/stub_status
+      - -nginx.scrape-uri=http://<Private_IP_ADDRESS>:8080/stub_status
     ports:
       - "9113:9113"
 
