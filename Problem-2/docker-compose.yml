@@ -1,0 +1,30 @@
+services:
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+
+  node_exporter:
+    image: prom/node-exporter
+    container_name: node_exporter
+    ports:
+      - "9100:9100"
+
+  nginx_exporter:
+    image: nginx/nginx-prometheus-exporter
+    container_name: nginx_exporter
+    command:
+      - -nginx.scrape-uri=http://host.docker.internal/stub_status
+    ports:
+      - "9113:9113"
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
